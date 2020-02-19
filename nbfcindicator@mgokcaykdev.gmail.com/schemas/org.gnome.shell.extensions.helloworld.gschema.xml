@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="gnome-shell-extensions-nbfcindicator">
+
+  <schema id="org.gnome.shell.extensions.nbfcindicator" path="/org/gnome/shell/extensions/nbfcindicator/">
+
+  <key type="i" name="update-time">
+      <default>5</default>
+      <summary>Seconds before next update</summary>
+      <description>This is the seconds for updating indicator.</description>
+  </key>
+
+  <key type="s" name="location">
+      <default>"/opt/nbfc/Configs"</default>
+      <summary>Location of Configs of Nbfc.exe</summary>
+      <description>Location of Configs of Nbfc.exe to get data and run it.</description>
+  </key>
+
+  <key type="s" name="configs">
+      <default>"..."</default>
+      <summary>Config files of Nbfc.exe</summary>
+      <description>Config files of Nbfc.exe to control correct fan.</description>
+  </key>
+
+  </schema>
+</schemalist>

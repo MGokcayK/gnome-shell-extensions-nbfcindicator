@@ -1,0 +1,8 @@
+{
+    "name": "Nbfc Indicator", 
+    "description": "Notebook Fan Control Indicator for Gnome Shell", 
+    "uuid": "nbfcindicator@mgokcaykdev.gmail.com", 
+    "shell-version": ["3.28.4"],
+    "settings-schema": "org.gnome.shell.extensions.nbfcindicator",
+    "gettext-domain": "nbfcindicator" 
+}
