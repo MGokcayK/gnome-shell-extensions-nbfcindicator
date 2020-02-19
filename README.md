@@ -7,3 +7,5 @@ Program that indicator work for it found from :
 After installation, you can use it by copying nbfcindicator@mgokcaykdev.gmail.com files to 
 -> .local/share/gnome-shell/extensions  .
 
+
+![Screen_Shot](https://github.com/MGokcayK/gnome-shell-extensions-nbfcindicator/blob/master/nbfcscreenshot.png)
