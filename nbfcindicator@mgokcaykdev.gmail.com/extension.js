@@ -96,15 +96,17 @@ const Nbfc_Indicator = new Lang.Class({
 		// adding settings
 		this._addSettings();
 
+		location = this.settings.get_string('location');
+
 		// handle switch and slider events with connect
 		serviceEnable.connect('toggled', Lang.bind(this, function(object, value){
 			if (value)
 			{
-				GLib.spawn_command_line_sync('mono /opt/nbfc/nbfc.exe start -e');
+				GLib.spawn_command_line_sync('mono '+ location +'/nbfc.exe start -e');
 				this._updateDisplay();
 			}else
 			{
-				GLib.spawn_command_line_sync('mono /opt/nbfc/nbfc.exe stop');
+				GLib.spawn_command_line_sync('mono '+ location +'/nbfc.exe stop');
 				this._updateDisplay();
 			}
 		}));
@@ -112,11 +114,11 @@ const Nbfc_Indicator = new Lang.Class({
 		autoControl.connect('toggled', Lang.bind(this, function(object, value){
 			if (value)
 			{
-				GLib.spawn_command_line_sync('mono /opt/nbfc/nbfc.exe set -a');
+				GLib.spawn_command_line_sync('mono '+ location +'/nbfc.exe set -a');
 				this._updateDisplay();
 			}else
 			{
-				let cmd = 'mono /opt/nbfc/nbfc.exe set -s' + String(fanSpeedValue);
+				let cmd = 'mono '+ location +'/nbfc.exe set -s' + String(fanSpeedValue);
 				GLib.spawn_command_line_sync(cmd);
 				this._updateDisplay();
 			}
@@ -146,9 +148,12 @@ const Nbfc_Indicator = new Lang.Class({
 			updateTimePre = this.settings.get_int('update-time');
 			this._updateTimeChanged();
 		}
+
+		location = this.settings.get_string('location');
+		//debuggerG.label.text = location;
 		
 		// run command line to get program output
-		commandLineOutput = GLib.spawn_command_line_sync('mono /opt/nbfc/nbfc.exe status -a').toString();
+		commandLineOutput = GLib.spawn_command_line_sync('mono '+ location +'/nbfc.exe status -a').toString();
 		var checker = commandLineOutput.split(",");
 		var line = commandLineOutput.split("\n");
 
@@ -211,15 +216,15 @@ const Nbfc_Indicator = new Lang.Class({
 		
 		readOnly.connect('toggle',Lang.bind(this, function(object, value)
 		{	
-			GLib.spawn_command_line_sync('mono /opt/nbfc/nbfc.exe stop');
+			GLib.spawn_command_line_sync('mono '+ location +'/nbfc.exe stop');
 			if (value) 
 			{
 				
-				GLib.spawn_command_line_sync('mono /opt/nbfc/nbfc.exe start -r');
+				GLib.spawn_command_line_sync('mono '+ location +'/nbfc.exe start -r');
 				this._updateDisplay();
 			}else 
 			{
-				GLib.spawn_command_line_sync('mono /opt/nbfc/nbfc.exe start -e');
+				GLib.spawn_command_line_sync('mono '+ location +'/nbfc.exe start -e');
 				this._updateDisplay();
 			}
 		}));
@@ -238,7 +243,7 @@ const Nbfc_Indicator = new Lang.Class({
 		schemaCnfg = this.settings.get_string('configs').split(".")[0];
 		if (strCnfg != schemaCnfg)
 		{
-			cmd = 'mono ' + this.settings.get_string('location').split('/Config')[0] + "/nbfc.exe config --apply '" + schemaCnfg + "'";
+			cmd = 'mono ' + this.settings.get_string('location') + "/nbfc.exe config --apply '" + schemaCnfg + "'";
 			GLib.spawn_command_line_sync(cmd);
 			txtCnfg = schemaCnfg;
 		}else 
@@ -296,7 +301,7 @@ const Nbfc_Indicator = new Lang.Class({
 	_onSliderValueChanged(_slider) {
 		if (autoControl.state == 0)
 		{
-			let cmd = 'mono /opt/nbfc/nbfc.exe set -s' + String(slider.value * 100);
+			let cmd = 'mono '+ location +'/nbfc.exe set -s' + String(slider.value * 100);
 			GLib.spawn_command_line_sync(cmd);
 			this._updateDisplay();
 		}
