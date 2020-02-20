@@ -61,7 +61,7 @@ const NbfcPrefsWidget = new GObject.Class({
         
         cmd = "ls " +this.settings.get_string('location'); // command for listing files in 'location' file.
 
-        let fileExist = GLib.file_test("Desktop",GLib.FileTest.IS_DIR); // check there is file named as 'location'.
+        let fileExist = GLib.file_test(this.settings.get_string('location'),GLib.FileTest.IS_DIR); // check there is file named as 'location'.
         if (!fileExist)
         {
             cmd = "ls"; // make base file as /home/USER.
