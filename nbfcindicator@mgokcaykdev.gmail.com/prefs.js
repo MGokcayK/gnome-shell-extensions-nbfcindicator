@@ -41,13 +41,13 @@ const NbfcPrefsWidget = new GObject.Class({
 
         this.settings = Convenience.getSettings(); // get settings files from schemas 
 
+        this.status = this._addLabel({label : '', x:0, y: 3}); // add status 
+
         this._addSpinButton({label : 'Update Time (sec) : ', x: 0, y: 0}); // add spin button
 
         this._getConfigList(); 
 
         this._addEntry({label: "Config location (current : " + this.settings.get_string('location') + ") :", x : 0, y : 1, key: 'location'}); // add entry for location
-        
-        this.status = this._addLabel({label : '', x:0, y: 3}); // add status 
 
         this._addComboBox({label: " Config : " + this.settings.get_string('configs'), x :0, y : 2}); // add combobox for config
  
@@ -59,16 +59,21 @@ const NbfcPrefsWidget = new GObject.Class({
     {
         items = ["..."]; // items in location file
         
-        cmd = "ls " +this.settings.get_string('location'); // command for listing files in 'location' file.
+        cmd = "ls " + this.settings.get_string('location') + '/Configs'; // command for listing files in 'location' file.
 
-        let fileExist = GLib.file_test(this.settings.get_string('location'),GLib.FileTest.IS_DIR); // check there is file named as 'location'.
+        let fileExist = GLib.file_test(this.settings.get_string('location') + '/Configs',GLib.FileTest.IS_DIR); // check there is file named as 'location'.
         if (!fileExist)
         {
             cmd = "ls"; // make base file as /home/USER.
-            this.status.label = 'Error : Location not found. '
+            this.status.label = 'Error : Configs not found in location. '
+        }else
+        {
+            if (this.status)
+                this.status.label = '';
         }   
         if(GLib.spawn_command_line_sync(cmd)[0]) // check command has not error.
         {
+            
             configs = GLib.spawn_command_line_sync(cmd)[1].toString(); // apply cmd 
         }else
         {
