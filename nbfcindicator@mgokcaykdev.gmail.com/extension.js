@@ -340,6 +340,7 @@ const Nbfc_Indicator = new Lang.Class({
 
 	// destroy the class  
 	destroy: function() {
+		Mainloop.source_remove(this._timeoutId);
 		this.parent();
 	}
 });
